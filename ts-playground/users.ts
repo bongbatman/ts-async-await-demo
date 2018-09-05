@@ -17,10 +17,15 @@ const user2: usersInterface = {
 let users: Array<usersInterface> = [user1, user2];
 
 export const getUser = (id: number) => {
+
+    /**
+     * Don't forget to assign return promise types to suppress warnings about incompatible types
+     */
     // @ts-ignore
-    return new Promise((resolve, reject) => {
+    return new Promise<usersInterface>((resolve, reject) => {
+
         // @ts-ignore
-        const user = users.find((user) => user.id === id); // array function finds the match
+        const user: usersInterface = users.find((user) => user.id === id); // array function finds the match
         if (user) {
             resolve(user);
         } else {

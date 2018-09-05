@@ -22,8 +22,9 @@ const grades: Array<gradesInterface> = [{
 
 export const getGrades = (schoolId: number | undefined) => {
 
+
     // @ts-ignore
-    return new Promise((resolve, reject) => {
+    return new Promise<Array<gradesInterface>>((resolve, reject) => {
         const grade: Array<gradesInterface> = grades.filter((grade) => grade.schoolId === schoolId);
 
         if (grade.length > 0) {

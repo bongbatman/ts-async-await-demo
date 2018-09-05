@@ -12,6 +12,9 @@ var user2 = {
 };
 var users = [user1, user2];
 exports.getUser = function (id) {
+    /**
+     * Don't forget to assign return promise types to suppress warnings about incompatible types
+     */
     // @ts-ignore
     return new Promise(function (resolve, reject) {
         // @ts-ignore
