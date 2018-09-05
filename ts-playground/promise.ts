@@ -59,7 +59,7 @@ const getStatusAlt = async (id: number) => {
     let avg = 0;
     if (grades.length > 0) {
         //reduce runs expression on array result and sets it on for next callback
-        avg = grades.map((grade: gradesInterface) => grade.grade).reduce((a, b) => a + b) / grades.length;
+        avg = grades.map((grade: gradesInterface) => grade.grade).reduce((a, b) => a + b)  / grades.length;
     }
     return `${user.name} has a ${avg}% in the class.`
 
