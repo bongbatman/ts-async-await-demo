@@ -47,28 +47,55 @@ var countries;
  * EUR to INR exchange rate on base free plan
  * @param symbols
  */
-var getExchangeRate = function (symbols) {
-    return axios_1.default.get(currencyUrl + "&symbols=" + symbols).then(function (response) {
-        rate = response.data.rates.INR;
-        return rate;
+var getExchangeRate = function (symbols) { return __awaiter(_this, void 0, void 0, function () {
+    var response, e_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                response = void 0;
+                return [4 /*yield*/, axios_1.default.get(currencyUrl + "&symbols=" + symbols)];
+            case 1:
+                response = _a.sent();
+                rate = response.data.rates.INR;
+                return [2 /*return*/, rate];
+            case 2:
+                e_1 = _a.sent();
+                //async/await sets catch block of promise if an error is thrown automatically
+                throw new Error("Can't find rates with symbol " + symbols);
+            case 3: return [2 /*return*/];
+        }
     });
-};
+}); };
 getExchangeRate("INR").then(function (rate) {
-    console.log(rate);
+    console.log("getExchangeRate: " + rate);
 });
 /**
  * getting all countries that accept INR
  * @param currency
  */
-var getCountries = function (currency) {
-    return axios_1.default.get("" + countryUrl + currency).then(function (response) {
-        // @ts-ignore
-        countries = response.data.map(function (country) { return country.name; });
-        return countries;
+var getCountries = function (currency) { return __awaiter(_this, void 0, void 0, function () {
+    var response, e_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                response = void 0;
+                return [4 /*yield*/, axios_1.default.get("" + countryUrl + currency)];
+            case 1:
+                response = _a.sent();
+                // @ts-ignore
+                countries = response.data.map(function (country) { return country.name; });
+                return [2 /*return*/, countries];
+            case 2:
+                e_2 = _a.sent();
+                throw new Error("Can't find country with currency " + currency);
+            case 3: return [2 /*return*/];
+        }
     });
-};
+}); };
 getCountries("INR").then(function (countries) {
-    console.log(countries);
+    console.log("getCountries: " + countries);
 });
 /**
  * Promise version of currency conversion
@@ -87,6 +114,8 @@ var convertCurrencyPromise = function (to, amount) {
 };
 convertCurrencyPromise("INR", 1).then(function (res) {
     console.log(res);
+}).catch(function (e) {
+    console.log("ERROR ******** " + e.message);
 });
 var convertCurrencyAsync = function (to, amount) { return __awaiter(_this, void 0, void 0, function () {
     var countries, exchangeRate, exchangedAmount;
@@ -105,4 +134,6 @@ var convertCurrencyAsync = function (to, amount) { return __awaiter(_this, void 
 }); };
 convertCurrencyAsync("INR", 100).then(function (res) {
     console.log(res);
+}).catch(function (e) {
+    console.log("ERROR ******** " + e.message);
 });

@@ -11,16 +11,23 @@ let countries: Array<string>;
  * EUR to INR exchange rate on base free plan
  * @param symbols
  */
-const getExchangeRate = (symbols:string) => {
-    return axios.get(`${currencyUrl}&symbols=${symbols}`).then((response) => {
+const getExchangeRate = async (symbols:string) => {
+        try {
+            let response;
+            response =  await axios.get(`${currencyUrl}&symbols=${symbols}`);
+            rate = response.data.rates.INR;
+            return rate;
+        }catch (e) {
+            //async/await sets catch block of promise if an error is thrown automatically
+            throw new Error(`Can't find rates with symbol ${symbols}`)
+        }
 
-        rate = response.data.rates.INR;
-        return rate;
-    });
+
+
 };
 
 getExchangeRate("INR").then((rate) => {
-   console.log(rate);
+   console.log(`getExchangeRate: ${rate}`);
 });
 
 
@@ -28,18 +35,23 @@ getExchangeRate("INR").then((rate) => {
  * getting all countries that accept INR
  * @param currency
  */
-const getCountries = (currency: string) => {
-  return axios.get(`${countryUrl}${currency}`).then((response) => {
+const getCountries = async (currency: string) => {
 
-      // @ts-ignore
-      countries = response.data.map((country) => country.name);
-      return countries;
-  });
+        try{
+            let response;
+            response = await axios.get(`${countryUrl}${currency}`);
+            // @ts-ignore
+            countries = response.data.map((country) => country.name);
+            return countries;
+        }catch (e) {
+            throw new Error(`Can't find country with currency ${currency}`)
+        }
+
 
 };
 
 getCountries("INR").then((countries) => {
-   console.log(countries);
+   console.log(`getCountries: ${countries}`);
 });
 
 
@@ -61,6 +73,8 @@ const convertCurrencyPromise = (to: string, amount: number) => {
 
 convertCurrencyPromise("INR", 1).then((res) => {
    console.log(res);
+}).catch((e) => {
+    console.log(`ERROR ******** ${e.message}`);
 });
 
 
@@ -75,4 +89,6 @@ const convertCurrencyAsync = async (to: string, amount: number) => {
 
 convertCurrencyAsync("INR", 100).then((res) => {
    console.log(res);
+}).catch((e) => {
+    console.log(`ERROR ******** ${e.message}`);
 });
